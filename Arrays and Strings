@@ -1,0 +1,80 @@
+const isUnique = string => {
+  const sorted = string.split("").sort();
+  for(let i = 1; i < sorted.length; i++) {
+    if(sorted[i] === sorted[i - 1]) return false
+  }
+
+  return true
+}
+
+/*
+sort string
+iterate over string starting at 1
+if the current letter matches the letter in the index before it return false
+return true at the end
+
+time complexity is O(n) because we iterate over the string once to check for matches
+javascript sort is O(nlogn)
+*/
+
+const isPermutation = (string1, string2) => {
+  if(string1.length !== string2.length) return false
+  const sort1 = string1.split("").sort().join("");
+  const sort2 = string2.split("").sort().join("");
+  return sort1 === sort2;
+}
+
+/*
+sort strings
+return true if the sorted strings match
+otherwise return false
+
+time complexity here would be O(n) because i would iterate through the string to split as well as join each character and that is dominant over the sort which would take O(n log n)
+*/
+
+const urlify = (url, trueLength) => {
+  let editedUrl = url.slice(0, trueLength);
+  return editedUrl.replace(/ /g, "%20")
+}
+
+/*
+slice string up to true length
+replace empty space with %20 using javascript replace and regex
+return new string 
+
+time complexity is O(n) because we need to iterate over the string during the replace method callfa
+*/
+
+const palindromePerm = string => {
+  const hasSeen = {};
+  let uniqueLetterCount = 0;
+  for(let i = 0; i < string.length; i++) {
+    if(string[i] === " ") {
+      continue;
+    }
+    if (hasSeen[string[i]]) {
+      delete hasSeen[string[i]];
+    } else {
+      hasSeen[string[i]] = true;
+    }
+    uniqueLetterCount++
+  }
+
+  if (uniqueLetterCount % 2 === 0) {
+    return Object.keys(hasSeen).length === 0;
+  } else {
+    return Object.keys(hasSeen).length === 1;
+  }
+}
+
+/*
+create letter counter
+if letter does not exist, put into counter
+if the letter does exist, delete the key
+skip iteration for spaces
+keep track of unique letter count excluding spaces
+if unique letter count is even, there should be no keys in the letter counter
+if unique letter count is odd, there should be only one key in the letter counter
+
+time complexity is O(N) because we iterate over each letter
+*/
