@@ -78,3 +78,54 @@ if unique letter count is odd, there should be only one key in the letter counte
 
 time complexity is O(N) because we iterate over each letter
 */
+
+const oneAway = (string1, string2) => {
+  let longString;
+  let shortString;
+  if(string1.length > string2.length) {
+    longString = string1;
+    shortString = string2;
+  } else {
+    longString = string2;
+    shortString = string1;
+  }
+
+  if (longString.length - shortString.length > 1) {
+    return false
+  }
+
+  let letterCount = {};
+  for(let i = 0; i < longString.length; i++) {
+    if (letterCount[longString[i]]) {
+      letterCount[longString[i]] += 1;
+    } else {
+      letterCount[longString[i]] = 1
+    }
+  }
+
+  for (let i = 0; i < shortString.length; i++) {
+    if(letterCount[shortString[i]] > 1) {
+      letterCount[shortString[i]] -= 1;
+    } else {
+      delete letterCount[shortString[i]]
+    }
+  }
+
+  if (Object.keys(letterCount).length === 1 || Object.keys(letterCount).length === 0) {
+    return true
+  }
+  return false
+}
+
+// oneAway("pale", "ple")
+// oneAway("pales", "pale")
+// oneAway("pale", "bake")
+/*
+if the difference in string lengths is more than one, return false
+create a hash to count the letters
+using the other string, if the hashmap has the key and the value is one, delete it, otherwise subtract one
+in the end, return true if there is one key or no key
+else false
+
+time complexity is O(n) because i iterate over each letter in both strings separately
+*/
